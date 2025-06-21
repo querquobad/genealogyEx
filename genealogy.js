@@ -99,7 +99,7 @@ function displaygenealogyData(id) {
         const parentData = genealogyApp.getgenealogyData(parentId);
         if (parentData) {
             const parentElement = document.createElement('strong');
-            parentElement.innerHTML = '<strong data-id="'+parentData.id+'">' + parentData.full_name + '</strong> (' + parentData.username + ')<br>';
+            parentElement.innerHTML = '<strong data-id="' + parentData.id + '">' + parentData.full_name + '</strong> (' + parentData.username + ')<br>';
             rootElement.prepend(parentElement);
         }
     }
@@ -117,13 +117,13 @@ function buildgenealogyTree(parentElement, data) {
 
     data.children.forEach(child => {
         const childElement = document.createElement('div');
-        childElement.className = 'genealogy-node';
-        childElement.innerHTML = `
-            <strong>${child.full_name}</strong> (${child.username})<br>
-            Status: ${child.status}<br>
-            Product: ${child.product_name}<br>
-            Category: ${child.category_name}
-        `;
+        const floatClass = child.binary_placement.toLowerCase() === 'left' ? 'left' : 'right';
+        childElement.className = 'genealogy-node d-inline-flex float-' + floatClass;
+        childElement.innerHTML = '<strong data-id="' + child.id + '">' + child.full_name + '</strong> (' + child.username + '<br>' +
+            'Status: ' + child.status + '<br>' +
+            'Product: ' + child.product_name + '<br>' +
+            'Category: ' + child.category_name
+        ;
         childElement.dataset.id = child.id;
 
         childrenContainer.appendChild(childElement);
